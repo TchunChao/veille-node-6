@@ -3,24 +3,13 @@
 <head>
  <meta charset="UTF-8">
  <title>Exercice 6</title>
- <link rel="stylesheet" type="text/css" href="../public/css/style.css">
+ <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
+ <%- include('composants/head') %> 
 <body>
- Node.js, Express et MongoDB.
- <button id='update'>Mise à jour téléphone</button>
- <form action="/ajouter" method="POST">
-	 <input type="text" placeholder="nom" name="nom">
-	 <input type="text" placeholder="Telephone" name="telephone">
-	 <button type="submit">Submit</button>
- </form>
- <table class="tableau">
-	 <% adresses.forEach(elm => {%>
-	 <tr>
-		 <td><%= elm.nom %></td>
-		 <td><%= elm.telephone %></td>
-		 <td><%= elm.id %></td>
-	 </tr>
-	 <% }) %>
- </table>
+ <%- include('composants/entete') %>
+ <h1>Accueil</h1>
+ <p>Bienvenue a l'atelier Node.js</p>
+ <%- include('composants/footer') %>
 </body>
 </html>

@@ -18,6 +18,19 @@ MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) 
  })
 })
 
+app.get('/accueil', (req, res) => {
+ console.log('la route route get / = ' + req.url)
+ 
+ var cursor = db.collection('adresse')
+                .find().toArray(function(err, resultat){
+ if (err) return console.log(err)
+ // transfert du contenu vers la vue index.ejs (renders)
+ // affiche le contenu de la BD
+ res.render('accueil.ejs', {adresse: resultat})
+ }) 
+})
+
+
 app.get('/adresse', (req, res) => {
  console.log('la route route get / = ' + req.url)
  

@@ -3,6 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <title>Exercice 6</title>
+ <link rel="stylesheet" type="text/css" href="../public/css/style.css">
 </head>
 <body>
  Node.js, Express et MongoDB.
@@ -12,14 +13,12 @@
 	 <input type="text" placeholder="Telephone" name="telephone">
 	 <button type="submit">Submit</button>
  </form>
-
  <table class="tableau">
 	 <% adresses.forEach(elm => {%>
 	 <tr>
-		 <td><%= elm.id %></td>
 		 <td><%= elm.nom %></td>
 		 <td><%= elm.telephone %></td>
-		 <td><%= elm.telephone %></td>
+		 <td><%= elm.id %></td>
 	 </tr>
 	 <% }) %>
  </table>

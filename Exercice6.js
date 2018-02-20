@@ -5,6 +5,7 @@ app.use(express.static('public'));
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
+const ObjectID = require('mongodb').ObjectID;
 /* on associe le moteur de vue au module «ejs» */
 app.set('view engine', 'ejs'); // générateur de template
 
@@ -18,7 +19,7 @@ MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) 
  })
 })
 
-app.get('/accueil', (req, res) => {
+app.get('/', (req, res) => {
  console.log('la route route get / = ' + req.url)
  
  var cursor = db.collection('adresse')
@@ -26,7 +27,7 @@ app.get('/accueil', (req, res) => {
  if (err) return console.log(err)
  // transfert du contenu vers la vue index.ejs (renders)
  // affiche le contenu de la BD
- res.render('accueil.ejs', {adresse: resultat})
+ res.render('accueil.ejs')
  }) 
 })
 
@@ -44,9 +45,79 @@ app.get('/adresse', (req, res) => {
 })
 
 app.post('/ajouter', (req, res) => {
- db.collection('adresse').save(req.body, (err, result) => {
- if (err) return console.log(err)
- console.log('sauvegarder dans la BD')
- res.redirect('/adresse')
- })
+	console.log(req.body._id)
+	if(req.body._id ==""){
+		console.log("nouveau");
+		let objet ={
+			nom:req.body.nom,
+			prenom:req.body.prenom,
+			courriel: req.body.courriel,
+			telephone:req.body.telephone
+		}
+		db.collection('adresse').save(objet, (err, result) => {
+		if (err) return console.log(err)
+			console.log('sauvegarder dans la BD')
+			res.redirect('/adresse')
+		})
+	}else{
+		console.log("modifier");
+		let objet = {
+			_id: ObjectID(req.body._id),
+			nom:req.body.nom,
+			prenom:req.body.prenom,
+			courriel: req.body.courriel,
+			telephone:req.body.telephone
+		}
+		db.collection('adresse').save(objet, (err, result) => {
+		if (err) return console.log(err)
+		console.log('sauvegarder dans la BD')
+		res.redirect('/adresse')
+	})
+	}
+	
 })
+
+app.get('/detruire/:id', (req, res) => {
+	let id = req.params.id
+	console.log(id)
+	 db.collection('adresse').findOneAndDelete({"_id" :ObjectID(req.params.id)} ,(err, resultat) => {
+	 if (err) return res.send(500, err)
+		if (err) return console.log(err)
+		 	res.redirect("/adresse")
+	}) 
+})
+
+app.post('/modifier', (req, res) => {
+	console.log('req.body' + req.body)
+	if (req.body['_id'] != " ") { 
+		console.log('sauvegarde') 
+		var oModif = {
+			"_id": ObjectID(req.body['_id']), 
+			nom: req.body.nom,
+			prenom:req.body.prenom, 
+			telephone:req.body.telephone,
+			courriel:req.body.courriel
+		}
+		var util = require("util");
+		console.log('util = ' + util.inspect(oModif));
+	}
+	else {
+		console.log('insert')
+		console.log(req.body)
+		var oModif = {
+			nom: req.body.nom,
+			prenom:req.body.prenom, 
+			telephone:req.body.telephone,
+			courriel:req.body.courriel
+		}
+	}
+})
+
+/*app.post('/modifier', (req, res) => {
+    req.body._id = ObjectID(req.body._id)
+    db.collection('adresse').save(req.body, (err, result) => {
+        if (err) return console.log(err)
+        console.log('sauvegarder dans la BD')
+        res.redirect('/list')
+    })
+})*/

@@ -113,11 +113,12 @@ app.post('/modifier', (req, res) => {
 	}
 })
 
-/*app.post('/modifier', (req, res) => {
-    req.body._id = ObjectID(req.body._id)
-    db.collection('adresse').save(req.body, (err, result) => {
-        if (err) return console.log(err)
-        console.log('sauvegarder dans la BD')
-        res.redirect('/list')
-    })
-})*/
+app.get('/trier/:cle/:ordre', (req, res) => {
+	let cle = req.params.cle
+	console.log("trié")
+	let ordre = (req.params.ordre == 'asc' ? 1:-1)
+	let cursor = db.collection('adresse').find().sort(cle,ordre).toArray(function(err, resultat){
+		ordre = (req.params.ordre == 'asc' ? "asc":"desc")
+ 		res.render('adresse.ejs', {adresse: resultat, cle, ordre})
+ 	})
+})

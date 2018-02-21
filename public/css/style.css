@@ -21,11 +21,6 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #45a049;
 }
-div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
 table {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -52,7 +47,24 @@ table th {
 /*Navigation*/
 header.entete {
   display: flex;
+  justify-content: center;
 }
 nav {
   order: 1;
+}
+div.nav-container {
+  justify-content: space-between;
+  display: flex;
+  background-color: none;
+  border: none;
+  padding: none;
+}
+div.nav-container section {
+  display: flex;
+}
+nav h1 {
+  line-height: 2;
+}
+nav a {
+  order: 10;
 }

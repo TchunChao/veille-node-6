@@ -49,3 +49,10 @@ table th {
   background-color: #4CAF50;
   color: white;
 }
+/*Navigation*/
+header.entete {
+  display: flex;
+}
+nav {
+  order: 1;
+}

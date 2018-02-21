@@ -1,3 +1,6 @@
+body {
+  margin: 0;
+}
 input[type=text],
 select {
   width: 100%;
@@ -77,6 +80,15 @@ nav h1:hover,
 nav a:hover {
   color: white;
 }
-body {
-  margin: 0;
+/*Footer*/
+footer.footer {
+  display: flex;
+  justify-content: center;
+}
+footer a {
+  text-decoration: none;
+  color: black;
+}
+footer ul {
+  list-style-type: none;
 }
